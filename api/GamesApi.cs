@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace functions
 {
@@ -14,7 +15,8 @@ namespace functions
     {
         [FunctionName("GamesApi")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [Table("Games", "1", Connection = "DatabaseConnection")] CloudTable table,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
