@@ -35,6 +35,7 @@ namespace functions
 
                 return new OkObjectResult(apiResponse);
             }
+
             return new OkResult();
         }
     }
