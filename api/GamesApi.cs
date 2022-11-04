@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos.Table;
+using System.Linq;
 
 namespace functions
 {
@@ -16,22 +17,34 @@ namespace functions
         [FunctionName("GamesApi")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [Table("Games", "1", Connection = "DatabaseConnection")] CloudTable table,
+            [Table("Games", "1", Connection = "GamesDatabaseConnection")] CloudTable table,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            var query = table.CreateQuery<TableData>();
+            query.TakeCount = 1;
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            var result = (await table.ExecuteQuerySegmentedAsync(query, null)).ToList();
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            if (result.Any())
+            {
+                var apiResponse = new ApiResponse(
+                    result.First().Json
+                );
 
-            return new OkObjectResult(responseMessage);
+                return new OkObjectResult(apiResponse);
+            }
+
+            return new OkResult();
         }
     }
+
+    public record ApiResponse(string Json);
+
+    public class TableData : TableEntity
+    {
+        public string Json { get; set; }
+    }
 }
+
