@@ -17,7 +17,7 @@ namespace functions
         [FunctionName("GamesApi")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [Table("Games", "1", Connection = "DatabaseConnection")] CloudTable table,
+            [Table("Games", "1", Connection = "GamesDatabaseConnection")] CloudTable table,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
