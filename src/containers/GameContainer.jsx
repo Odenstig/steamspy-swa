@@ -1,40 +1,55 @@
 import React, { useEffect, useState, } from 'react';
-import CurrentWeather from '../components/CurrentWeather';
-import ForecastList from '../components/ForecastList';
-import SearchForm from '../components/SearchForm';
-import Header from '../components/Header';
+import GamesList from '../components/GamesList';
 
 const GameContainer = () => {
-    const [gamesList, setGamesList] = useState({});
+
+    const [gamesList, setGamesList] = useState([]);
     const [loader, setLoaderState] = useState(true);
 
-    let listSourceUrl = '';
+    useEffect(() => {
+        
+        let Url = 'http://localhost:7071/api/GamesApi';
+    
 
-    const GetData = async () => {
-        setLoaderState(true);
-        const apiResponseList = await fetchDataList();
+        const fetchDataList = async () =>{
+            const res = await fetch(Url)
+            const data = await res.json();
 
-    }
+            const parsed = JSON.parse(data.json)
+            
+            return parsed;
+        }
 
-    const fetchDataList = async () =>{
-        const res = await fetch(listSourceUrl)
-        const data = await res.json();
-        console.log(data);
-        return data;
-    }
-    GetData();
-};
+        const GetData = async () => {
+            setLoaderState(true);
 
-if(loader){
-    return(<div>
-        <h3>Loading list...</h3>
-    </div>)
-}
+            const gamesListData = await fetchDataList();
+
+            setGamesList(gamesListData)
+            setLoaderState(false)
+        }
+
+        GetData();
+    },[])
+
+    
+
+
+if(loader)
+    return(
+        <div>
+            <h3>Loading..</h3>
+        </div>
+    )
 
 return(
     <>
     <div>
-        
+        <GamesList gamesList = {gamesList}/>
     </div>
     </>
 )
+
+};
+
+export default GameContainer

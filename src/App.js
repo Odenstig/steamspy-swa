@@ -1,8 +1,17 @@
+import './App.css'
 import React from 'react';
+import GamesContainer from './containers/GameContainer';
+import Header from './components/Header'
 
 function App() {
-  const value = 'World';
-  return <div>Hello {value}</div>;
+  return(
+    <>
+    <Header/>
+    <div className='App'>
+      <GamesContainer/>
+    </div>
+    </>
+  );
 }
 
 export default App;
