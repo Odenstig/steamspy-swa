@@ -4,6 +4,7 @@
     font-size: 4rem;
     color:aliceblue;
     background-color: #171a21;
-    text-shadow:#140024 0 12px 12px;
+    text-shadow:#171a21 0 4px 8px;
     padding-bottom: 1.5vw;
+    background: linear-gradient(-180deg, rgb(23, 26, 33, 0.1), rgb(42, 71, 94, 1)); 
 }

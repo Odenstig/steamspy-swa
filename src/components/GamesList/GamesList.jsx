@@ -34,7 +34,7 @@ const GamesList = ({gamesList}) => {
                     <>
                         <div key={index} className={styles.inner} style={{
                                 
-                                backgroundImage: "linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)), url('https://steamcdn-a.akamaihd.net/steam/apps/placeholder/header.jpg')".replace('placeholder', games.Value.appid),
+                                backgroundImage: "linear-gradient(to bottom, rgb(102, 192, 244, 0.1), rgba(23, 26, 33, 0.90)), url('https://steamcdn-a.akamaihd.net/steam/apps/placeholder/header.jpg')".replace('placeholder', games.Value.appid),
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
@@ -48,7 +48,7 @@ const GamesList = ({gamesList}) => {
                             <h2>
                                 {games.Value.name}
                             </h2>
-                            <h3>
+                            <h3 className={styles.ccu}>
                                 {games.Value.ccu} Concurrent players
                             </h3>
                         </div>
