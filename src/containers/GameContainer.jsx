@@ -23,18 +23,20 @@ const GameContainer = () => {
         return data;
     }
     GetData();
+    if(loader){
+        return(<div>
+            <h3>Loading list...</h3>
+        </div>)
+    }
+    
+    return(
+        <>
+        <div>
+            
+        </div>
+        </>
+    )
 };
 
-if(loader){
-    return(<div>
-        <h3>Loading list...</h3>
-    </div>)
-}
+export default GameContainer;
 
-return(
-    <>
-    <div>
-        
-    </div>
-    </>
-)
