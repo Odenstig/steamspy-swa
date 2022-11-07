@@ -3,10 +3,10 @@ import styles from './Header.module.css'
 
 const Header = () => {
     return (
-        <div>
-            <h1 className={styles.title}>
+        <div className={styles.box}>
+            <h3 className={styles.title}>
                 Top 10 Steam Games!
-            </h1>
+            </h3>
         </div>
     )
 }
